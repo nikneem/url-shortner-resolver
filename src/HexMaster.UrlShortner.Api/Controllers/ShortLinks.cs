@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HexMaster.UrlShortner.Api.Controllers
 {
@@ -8,6 +9,7 @@ namespace HexMaster.UrlShortner.Api.Controllers
     {
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get([FromQuery]string? query)
         {
             var responsObject = new
