@@ -1,11 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 using HexMaster.DomainDrivenDesign;
 using HexMaster.DomainDrivenDesign.ChangeTracking;
+using HexMaster.UrlShortner.Core;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.DomainModels;
 using HexMaster.UrlShortner.ShortLinks.Exceptions;
 
 namespace HexMaster.UrlShortner.ShortLinks.DomainModels;
 
-public class ShortLink : DomainModel<Guid>
+public class ShortLink : DomainModel<Guid>, IShortLink
 {
 
     public string ShortCode { get; private set; }
@@ -28,6 +30,32 @@ public class ShortLink : DomainModel<Guid>
         if (!Equals(ShortCode, value))
         {
             ShortCode = value.ToLowerInvariant();
+            SetState(TrackingState.Modified);
+        }
+    }
+    public void SetTargetUrl(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new TargetUrlNullOrEmptyException();
+        }
+
+        if (!Regex.IsMatch(value, Constants.UrlRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase))
+        {
+            throw new TargetUrlInvalidException();
+        }
+
+        if (!Equals(TargetUrl, value))
+        {
+            TargetUrl = value.ToLowerInvariant();
+            SetState(TrackingState.Modified);
+        }
+    }
+    public void SetExpiryDate(DateTimeOffset? value)
+    {
+        if (!Equals(ExpiresOn, value))
+        {
+            ExpiresOn = value;
             SetState(TrackingState.Modified);
         }
     }

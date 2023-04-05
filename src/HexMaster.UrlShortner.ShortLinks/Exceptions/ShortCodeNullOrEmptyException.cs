@@ -2,7 +2,7 @@
 
 namespace HexMaster.UrlShortner.ShortLinks.Exceptions;
 
-public class ShortCodeNullOrEmptyException : UrlShortnerShortLinkBaseException
+public class ShortCodeNullOrEmptyException : UrlShortnerShortLinkException
 {
     public ShortCodeNullOrEmptyException() : base(UrlShortnerShortLinksErrorCodes.ShortCodeNullOrEmpty)
     {

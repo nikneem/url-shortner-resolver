@@ -3,15 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.ShortLinks", "HexMaster.UrlShortner.ShortLinks\HexMaster.UrlShortner.ShortLinks.csproj", "{2EC42D9F-8C91-497C-83A4-EECBA171F160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.ShortLinks", "HexMaster.UrlShortner.ShortLinks\HexMaster.UrlShortner.ShortLinks.csproj", "{2EC42D9F-8C91-497C-83A4-EECBA171F160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.Core", "HexMaster.UrlShortner.Core\HexMaster.UrlShortner.Core.csproj", "{E2005B6C-8309-4EC5-9CE1-576622D80099}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.Core", "HexMaster.UrlShortner.Core\HexMaster.UrlShortner.Core.csproj", "{E2005B6C-8309-4EC5-9CE1-576622D80099}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.SqlData", "HexMaster.UrlShortner.SqlData\HexMaster.UrlShortner.SqlData.csproj", "{6200C0AA-C4AE-4E2F-9B27-C65CC2F550C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.SqlData", "HexMaster.UrlShortner.SqlData\HexMaster.UrlShortner.SqlData.csproj", "{6200C0AA-C4AE-4E2F-9B27-C65CC2F550C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{470ABD0E-AE8D-4B1B-ACE2-F05F53AA123E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.ShortLinks.Tests", "HexMaster.UrlShortner.ShortLinks.Tests\HexMaster.UrlShortner.ShortLinks.Tests.csproj", "{F338C30B-EDA7-4CB8-9327-0EFEF6F4DCE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.ShortLinks.Tests", "HexMaster.UrlShortner.ShortLinks.Tests\HexMaster.UrlShortner.ShortLinks.Tests.csproj", "{F338C30B-EDA7-4CB8-9327-0EFEF6F4DCE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.ShortLinks.Abstractions", "HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj", "{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.Api", "HexMaster.UrlShortner.Api\HexMaster.UrlShortner.Api.csproj", "{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,14 @@ Global
 		{F338C30B-EDA7-4CB8-9327-0EFEF6F4DCE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F338C30B-EDA7-4CB8-9327-0EFEF6F4DCE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F338C30B-EDA7-4CB8-9327-0EFEF6F4DCE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
