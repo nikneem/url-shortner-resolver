@@ -1,10 +1,26 @@
+using HexMaster.UrlShortner.ShortLinks.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
+var corsPolicyName = "DefaultCors";
 
 // Add services to the container.
+builder.Services.AddShortLinks();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: corsPolicyName,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+        });
+});
 
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,6 +45,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(corsPolicyName);
 app.UseAuthorization();
 app.MapControllers();
 

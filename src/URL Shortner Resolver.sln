@@ -13,9 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{470ABD0E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.ShortLinks.Tests", "HexMaster.UrlShortner.ShortLinks.Tests\HexMaster.UrlShortner.ShortLinks.Tests.csproj", "{F338C30B-EDA7-4CB8-9327-0EFEF6F4DCE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.ShortLinks.Abstractions", "HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj", "{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.ShortLinks.Abstractions", "HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj", "{431B3C7F-56A5-44AA-9BD9-3E3DD7E00B2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.Api", "HexMaster.UrlShortner.Api\HexMaster.UrlShortner.Api.csproj", "{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.Api", "HexMaster.UrlShortner.Api\HexMaster.UrlShortner.Api.csproj", "{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.TableData", "HexMaster.UrlShortner.TableData\HexMaster.UrlShortner.TableData.csproj", "{EC023136-C81C-4E26-BD17-AB0C456D5A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.CosmosDb", "HexMaster.UrlShortner.CosmosDb\HexMaster.UrlShortner.CosmosDb.csproj", "{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80536AF0-C877-4BF8-9C51-CA3C4E832DAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC023136-C81C-4E26-BD17-AB0C456D5A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC023136-C81C-4E26-BD17-AB0C456D5A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC023136-C81C-4E26-BD17-AB0C456D5A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC023136-C81C-4E26-BD17-AB0C456D5A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

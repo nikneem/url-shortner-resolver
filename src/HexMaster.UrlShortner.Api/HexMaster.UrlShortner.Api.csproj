@@ -15,4 +15,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj" />
+    <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks\HexMaster.UrlShortner.ShortLinks.csproj" />
+  </ItemGroup>
+
 </Project>

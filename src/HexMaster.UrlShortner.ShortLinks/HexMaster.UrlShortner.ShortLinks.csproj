@@ -12,8 +12,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HexMaster.UrlShortner.Core\HexMaster.UrlShortner.Core.csproj" />
+    <ProjectReference Include="..\HexMaster.UrlShortner.CosmosDb\HexMaster.UrlShortner.CosmosDb.csproj" />
     <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj" />
     <ProjectReference Include="..\HexMaster.UrlShortner.SqlData\HexMaster.UrlShortner.SqlData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
   </ItemGroup>
 
 </Project>

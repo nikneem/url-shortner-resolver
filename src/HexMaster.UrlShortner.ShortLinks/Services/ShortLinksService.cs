@@ -1,13 +1,11 @@
 ﻿using HexMaster.UrlShortner.Core;
 using HexMaster.UrlShortner.Core.Helpers;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.DataTransferObjects;
-using HexMaster.UrlShortner.ShortLinks.Abstractions.DomainModels;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.Repositories;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.Services;
 using HexMaster.UrlShortner.ShortLinks.DomainModels;
 using HexMaster.UrlShortner.ShortLinks.ErrorCodes;
 using HexMaster.UrlShortner.ShortLinks.Exceptions;
-using HexMaster.UrlShortner.SqlData.Entities;
 using System.Text.RegularExpressions;
 
 namespace HexMaster.UrlShortner.ShortLinks.Services;
