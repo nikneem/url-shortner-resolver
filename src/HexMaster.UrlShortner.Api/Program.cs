@@ -1,11 +1,18 @@
-using HexMaster.UrlShortner.ShortLinks.Configuration;
+using HexMaster.UrlShortner.Core.Configuration;
+using HexMaster.UrlShortner.CosmosDb;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.Repositories;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.Services;
+using HexMaster.UrlShortner.ShortLinks.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 var corsPolicyName = "DefaultCors";
 
 // Add services to the container.
-builder.Services.AddShortLinks();
+builder.Services.AddScoped<IShortLinksService, ShortLinksService>();
+builder.Services.AddScoped<IShortLinksRepository, ShortLinksTableRepository>();
+builder.Services.Configure<AzureCloudConfiguration>(
+    builder.Configuration.GetSection(AzureCloudConfiguration.SectionName));
 
 builder.Services.AddCors(options =>
 {

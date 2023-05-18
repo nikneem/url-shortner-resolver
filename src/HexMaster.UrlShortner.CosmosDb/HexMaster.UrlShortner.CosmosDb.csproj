@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="C:\Users\EduardKeilholz\.nuget\packages\microsoft.azure.cosmos\3.32.3\contentFiles\any\netstandard2.0\ThirdPartyNotice.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HexMaster.DomainDrivenDesign" Version="2.0.0" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.3" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj" />
+    <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks\HexMaster.UrlShortner.ShortLinks.csproj" />
   </ItemGroup>
 
 </Project>

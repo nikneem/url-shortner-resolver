@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HexMaster.UrlShortner.CosmosDb\HexMaster.UrlShortner.CosmosDb.csproj" />
     <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks.Abstractions\HexMaster.UrlShortner.ShortLinks.Abstractions.csproj" />
     <ProjectReference Include="..\HexMaster.UrlShortner.ShortLinks\HexMaster.UrlShortner.ShortLinks.csproj" />
   </ItemGroup>

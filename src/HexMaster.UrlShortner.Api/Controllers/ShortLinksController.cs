@@ -13,23 +13,44 @@ public class ShortLinksController : ControllerBase
 
 
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] string? query)
+    [Authorize]
+    public async Task<IActionResult> Get([FromQuery] string? query, CancellationToken token)
     {
-        var ownerId = Guid.NewGuid();
-        var responseObject = await _shortLinksService.ListAsync(ownerId, query);
+        var ownerId = GetSubjectId();
+        var responseObject = await _shortLinksService.ListAsync(ownerId, query, cancellationToken: token);
         return Ok(responseObject);
     }
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> Get(ShortLinkCreateDto dto)
+    public async Task<IActionResult> Post(ShortLinkCreateDto dto, CancellationToken token)
     {
-        var responsObject = new
+        var ownerId = GetSubjectId();
+        var responseObject = await _shortLinksService.PostAsync(ownerId, dto.Endpoint, token);
+        return Ok(responseObject);
+    }
+
+    private string GetSubjectId()
+    {
+        if (HttpContext.User.Identity != null)
         {
-            ResponseCode = "OK",
-            SearchQuery = dto
-        };
-        return Ok(responsObject);
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                var subject = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+                if (string.IsNullOrWhiteSpace(subject))
+                {
+                    if (HttpContext.User.Claims.Any(c =>
+                            c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"))
+                    {
+                        subject = HttpContext.User.Claims.FirstOrDefault(c =>
+                            c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
+                    }
+                }
+                return subject;
+            }
+        }
+
+        return string.Empty;
     }
 
     public ShortLinksController(IShortLinksService shortLinksService)

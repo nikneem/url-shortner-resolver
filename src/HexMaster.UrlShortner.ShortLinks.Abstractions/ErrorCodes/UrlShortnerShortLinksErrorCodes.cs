@@ -1,7 +1,8 @@
-﻿namespace HexMaster.UrlShortner.ShortLinks.ErrorCodes;
+﻿namespace HexMaster.UrlShortner.ShortLinks.Abstractions.ErrorCodes;
 
 public abstract class UrlShortnerShortLinksErrorCodes : UrlShortnerShortLinksErrorCode
 {
+    public static readonly UrlShortnerShortLinksErrorCode ShortLinkNotFound = new ShortLinkNotFoundErrorCode();
     public static readonly UrlShortnerShortLinksErrorCode QueryStringInvalid = new QueryStringInvalidErrorCode();
     public static readonly UrlShortnerShortLinksErrorCode ShortCodeCreationFailed= new ShortCodeCreationFailedErrorCode();
     public static readonly UrlShortnerShortLinksErrorCode ShortCodeNullOrEmpty = new ShortCodeNullOrEmptyErrorCode();

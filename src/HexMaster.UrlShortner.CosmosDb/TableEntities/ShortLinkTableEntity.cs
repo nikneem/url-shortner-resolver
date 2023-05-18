@@ -1,16 +1,14 @@
-﻿using Azure;
+﻿using Newtonsoft.Json;
 
 namespace HexMaster.UrlShortner.CosmosDb.TableEntities;
 
-public class ShortLinkTableEntity
+public record ShortLinkTableEntity
 {
-    public string Id { get; set; }
-    public string RowKey { get; set; }
-    public string ShortCode { get; set; }
-    public Guid OwnerId { get; set; }
-    public string EndpointUrl { get; set; }
-    public DateTimeOffset CreatedOn{ get; set; }
-    public DateTimeOffset? ExpiresOn { get; set; }
-    public DateTimeOffset? Timestamp { get; set; }
-    public ETag ETag { get; set; }
+    [JsonProperty("id")] public Guid Id { get; set; }
+    [JsonProperty("itemType")] public required string ItemType { get; set; }
+    [JsonProperty("ownerId")] public string OwnerId { get; set; }
+    [JsonProperty("shortCode")] public required string ShortCode { get; set; }
+    [JsonProperty("endpointUrl")] public required string EndpointUrl { get; set; }
+    [JsonProperty("createdOn")] public DateTimeOffset CreatedOn { get; set; }
+    [JsonProperty("expiresOn")] public DateTimeOffset? ExpiresOn { get; set; }
 }

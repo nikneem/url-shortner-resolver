@@ -110,6 +110,11 @@ public class ShortLinksTableRepository : IShortLinksRepository
 
     }
 
+    public Task<bool> ExistsAsync(string shortCode, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
     public ShortLinksTableRepository(IOptions<AzureCloudConfiguration> cloudConfiguration)
     {
         // Here, I want to create a CloudTableClient instance using the StorageAccountName from the cloudConfiguration

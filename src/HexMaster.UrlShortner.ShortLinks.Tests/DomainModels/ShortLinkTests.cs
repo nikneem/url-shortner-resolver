@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.ErrorCodes;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.Exceptions;
 using HexMaster.UrlShortner.ShortLinks.DomainModels;
-using HexMaster.UrlShortner.ShortLinks.ErrorCodes;
-using HexMaster.UrlShortner.ShortLinks.Exceptions;
 
 namespace HexMaster.UrlShortner.ShortLinks.Tests.DomainModels;
 
@@ -12,7 +12,7 @@ public class ShortLinkTests
     [InlineData(null)]
     public void WhenShortCodeIsNullOrEmpty_ItThrowsShortCodeNullOrEmptyException(string shortCode)
     {
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
 
         var action = () => shortLink.SetShortCode(shortCode);
         action.Should().Throw<ShortCodeNullOrEmptyException>()
@@ -26,7 +26,7 @@ public class ShortLinkTests
     [InlineData("shortcodetoolong")]
     public void WhenShortCodeIsInvalid_ItThrowsShortCodeInvalidException(string shortCode)
     {
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
 
         var action = () => shortLink.SetShortCode(shortCode);
         action.Should().Throw<ShortCodeInvalidException>()
@@ -43,7 +43,7 @@ public class ShortLinkTests
     public void WhenShortCodeIsValid_TheNewShortCodeIsAccepted(string shortCode)
     {
         var expected = shortCode.ToLowerInvariant();
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
         shortLink.SetShortCode(shortCode);
         shortLink.ShortCode.Should().Be(expected);
     }
@@ -53,7 +53,7 @@ public class ShortLinkTests
     [InlineData(null)]
     public void WhenTargetUrlIsNullOrEmpty_ItThrowsShortCodeNullOrEmptyException(string shortCode)
     {
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
 
         var action = () => shortLink.SetTargetUrl(shortCode);
         action.Should().Throw<TargetUrlNullOrEmptyException>()
@@ -67,7 +67,7 @@ public class ShortLinkTests
     [InlineData("shortcodetoolong")]
     public void WhenTargetUrlIsInvalid_ItThrowsShortCodeInvalidException(string shortCode)
     {
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
 
         var action = () => shortLink.SetTargetUrl(shortCode);
         action.Should().Throw<TargetUrlInvalidException>()
@@ -85,7 +85,7 @@ public class ShortLinkTests
     public void WhenTargetUrlIsValid_TheNewShortCodeIsAccepted(string shortCode)
     {
         var expected = shortCode.ToLowerInvariant();
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
         shortLink.SetTargetUrl(shortCode);
         shortLink.TargetUrl.Should().Be(expected);
     }
@@ -94,7 +94,7 @@ public class ShortLinkTests
     public void WhenExpiryDateSet_TheExpiryDateChanged()
     {
         var expected = DateTimeOffset.UtcNow;
-        var shortLink = ShortLink.Create("https://link.to.endpoint");
+        var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
         shortLink.SetExpiryDate(expected);
         shortLink.ExpiresOn.Should().Be(expected);
     }

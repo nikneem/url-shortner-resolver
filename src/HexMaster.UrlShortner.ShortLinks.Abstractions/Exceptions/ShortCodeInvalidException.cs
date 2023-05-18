@@ -1,6 +1,6 @@
-﻿using HexMaster.UrlShortner.ShortLinks.ErrorCodes;
+﻿using HexMaster.UrlShortner.ShortLinks.Abstractions.ErrorCodes;
 
-namespace HexMaster.UrlShortner.ShortLinks.Exceptions;
+namespace HexMaster.UrlShortner.ShortLinks.Abstractions.Exceptions;
 
 public class ShortCodeInvalidException : UrlShortnerShortLinkException
 {

@@ -1,4 +1,4 @@
-﻿namespace HexMaster.UrlShortner.ShortLinks.ErrorCodes;
+﻿namespace HexMaster.UrlShortner.ShortLinks.Abstractions.ErrorCodes;
 
 public class ShortCodeCreationFailedErrorCode : UrlShortnerShortLinksErrorCode
 {

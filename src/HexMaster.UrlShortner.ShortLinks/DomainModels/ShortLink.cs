@@ -3,7 +3,7 @@ using HexMaster.DomainDrivenDesign;
 using HexMaster.DomainDrivenDesign.ChangeTracking;
 using HexMaster.UrlShortner.Core;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.DomainModels;
-using HexMaster.UrlShortner.ShortLinks.Exceptions;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.Exceptions;
 
 namespace HexMaster.UrlShortner.ShortLinks.DomainModels;
 
@@ -68,15 +68,15 @@ public class ShortLink : DomainModel<Guid>, IShortLink
         ExpiresOn = expiresOn;
     }
 
-    private ShortLink(string targetUrl) : base(Guid.NewGuid(), TrackingState.New)
+    private ShortLink(string targetUrl, string shortCode) : base(Guid.NewGuid(), TrackingState.New)
     {
-        ShortCode = "";// Generate Random
+        ShortCode = shortCode;
         TargetUrl = targetUrl;
         CreatedOn = DateTimeOffset.UtcNow;
     }
 
-    public static ShortLink Create(string targetUrl)
+    public static ShortLink Create(string targetUrl, string shortCode)
     {
-        return new ShortLink(targetUrl);
+        return new ShortLink(targetUrl, shortCode);
     }
 }
