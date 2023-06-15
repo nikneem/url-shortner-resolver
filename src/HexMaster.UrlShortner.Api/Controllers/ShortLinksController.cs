@@ -1,24 +1,34 @@
+using HexMaster.UrlShortner.Api.Base;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.DataTransferObjects;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HexMaster.UrlShortner.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ShortLinksController : ControllerBase
+public class ShortLinksController : AuthenticatedControllerBase
 {
     private readonly IShortLinksService _shortLinksService;
 
-
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> Get([FromQuery] string? query, CancellationToken token)
+    public async Task<IActionResult> List([FromQuery] string? query, CancellationToken token)
     {
         var ownerId = GetSubjectId();
         var responseObject = await _shortLinksService.ListAsync(ownerId, query, cancellationToken: token);
         return Ok(responseObject);
+    }
+
+    [HttpGet("{id:guid}")]
+    [Authorize]
+    public async Task<IActionResult> Get(Guid id, CancellationToken token)
+    {
+        var ownerId = GetSubjectId();
+        var detailsModel = await _shortLinksService.GetAsync(ownerId, id, token);
+        return Ok(detailsModel);
     }
 
     [HttpPost]
@@ -30,27 +40,34 @@ public class ShortLinksController : ControllerBase
         return Ok(responseObject);
     }
 
-    private string GetSubjectId()
+    [HttpPut("{id:guid}")]
+    [Authorize]
+    public async Task<IActionResult> Put(Guid id, ShortLinkDetailsDto details, CancellationToken token)
     {
-        if (HttpContext.User.Identity != null)
+        var ownerId = GetSubjectId();
+        var success = await _shortLinksService.PutAsync(ownerId, id, details, token);
+        if (success)
         {
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                var subject = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
-                if (string.IsNullOrWhiteSpace(subject))
-                {
-                    if (HttpContext.User.Claims.Any(c =>
-                            c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"))
-                    {
-                        subject = HttpContext.User.Claims.FirstOrDefault(c =>
-                            c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
-                    }
-                }
-                return subject;
-            }
+            return Ok();
         }
 
-        return string.Empty;
+        return BadRequest();
+    }
+
+    [HttpPatch("{id:guid}")]
+    [Authorize]
+    public async Task<IActionResult> Patch(Guid id, JsonPatchDocument<ShortLinkDetailsDto> patchDocument, CancellationToken token)
+    {
+        var ownerId = GetSubjectId();
+        var detailsModel = await _shortLinksService.GetAsync(ownerId, id, token);
+        patchDocument.ApplyTo(detailsModel, ModelState);
+        var success = await _shortLinksService.PutAsync(ownerId, id, detailsModel, token);
+        if (success)
+        {
+            return Ok();
+        }
+
+        return BadRequest();
     }
 
     public ShortLinksController(IShortLinksService shortLinksService)
