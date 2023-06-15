@@ -1,4 +1,4 @@
-﻿using HexMaster.UrlShortner.ShortLinks.Abstractions.DataTransferObjects;
+using HexMaster.UrlShortner.ShortLinks.Abstractions.DataTransferObjects;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
