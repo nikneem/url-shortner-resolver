@@ -88,9 +88,9 @@ public class ShortLinksTableRepository : IShortLinksRepository
     {
         var container = _cosmosClient.GetContainer(DatabaseName, ContainerName);
 
+        var queryString = $"SELECT * FROM c WHERE c.{nameof(ShortLinkTableEntity.ItemType).LowerCaseFirstCharecter()} = @partitionKey AND c.{nameof(ShortLinkTableEntity.Id).LowerCaseFirstCharecter()} = @id AND c.{nameof(ShortLinkTableEntity.OwnerId).LowerCaseFirstCharecter()} = @ownerId";
         QueryDefinition query =
-            new QueryDefinition(
-                    $"SELECT * FROM c WHERE c.{nameof(ShortLinkTableEntity.ItemType)} = @partitionKey AND c.{nameof(ShortLinkTableEntity.Id)} = @id AND c.{nameof(ShortLinkTableEntity.OwnerId)} = @ownerId")
+            new QueryDefinition(queryString)
                 .WithParameter("@partitionKey", PartitionKey)
                 .WithParameter("@id", id)
                 .WithParameter("@ownerId", ownerId);
@@ -99,6 +99,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
         while (queryResultSetIterator.HasMoreResults)
         {
             var currentResultSet = await queryResultSetIterator.ReadNextAsync(cancellationToken);
+            Console.WriteLine($"Found {currentResultSet.Count} results in the result set");
             foreach (var entity in currentResultSet)
             {
                 return new ShortLinkDetailsDto
