@@ -9,7 +9,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: HexMaster.UrlShortner.Api/publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 7.0.x
-  WORKING_DIRECTORY: HexMaster.UrlShortner.Api
+  WORKING_DIRECTORY: src/HexMaster.UrlShortner.Api
 jobs:
   build:
     runs-on: ubuntu-latest
