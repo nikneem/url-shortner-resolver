@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.Api",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexMaster.UrlShortner.CosmosDb", "HexMaster.UrlShortner.CosmosDb\HexMaster.UrlShortner.CosmosDb.csproj", "{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HexMaster.UrlShortner.Metrics", "HexMaster.UrlShortner.Metrics\HexMaster.UrlShortner.Metrics.csproj", "{655ABAE8-35EB-4763-8F27-F06821F4945E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D64067D2-FE80-4A51-AC03-D53EA7A3EE46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655ABAE8-35EB-4763-8F27-F06821F4945E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655ABAE8-35EB-4763-8F27-F06821F4945E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655ABAE8-35EB-4763-8F27-F06821F4945E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655ABAE8-35EB-4763-8F27-F06821F4945E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

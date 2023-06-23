@@ -1,6 +1,6 @@
 targetScope = 'subscription'
 
-var productName = 'urlshrink-api'
+var productName = 'tinylnk-api'
 
 @allowed([
   'dev'
@@ -20,5 +20,15 @@ resource targetResourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   location: location
   tags: {
     runtimeEnvironment: environmentName
+  }
+}
+
+module resourceModule 'resources.bicep' = {
+  name: 'resourceModule'
+  scope: targetResourceGroup
+  params: {
+    environmentName: environmentName
+    location: location
+    locationAbbreviation: locationAbbreviation
   }
 }

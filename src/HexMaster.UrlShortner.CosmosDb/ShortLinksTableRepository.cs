@@ -10,7 +10,6 @@ using HexMaster.UrlShortner.ShortLinks.Abstractions.Repositories;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Options;
 using Microsoft.Azure.Cosmos.Linq;
-using System.Xml;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.Exceptions;
 using HexMaster.UrlShortner.ShortLinks.DomainModels;
 
@@ -20,7 +19,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
 {
     private const string DatabaseName = "shortlinks";
     private const string ContainerName = "operation";
-    private const string PartitionKey = "shortlink";
+    private const string ItemType = "shortlink";
     private readonly CosmosClient _cosmosClient;
 
     public async Task<ShortLinksListDto> ListAsync(
@@ -34,7 +33,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
 
         int skip = pageSize * page;
         var linkQueryDefinition = container.GetItemLinqQueryable<ShortLinkTableEntity>()
-            .Where(x => x.OwnerId == ownerId && x.ItemType == PartitionKey);
+            .Where(x => x.OwnerId == ownerId && x.ItemType == ItemType);
 
         if (!string.IsNullOrWhiteSpace(query))
         {
@@ -91,7 +90,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
         var queryString = $"SELECT * FROM c WHERE c.{nameof(ShortLinkTableEntity.ItemType).LowerCaseFirstCharecter()} = @partitionKey AND c.{nameof(ShortLinkTableEntity.Id).LowerCaseFirstCharecter()} = @id AND c.{nameof(ShortLinkTableEntity.OwnerId).LowerCaseFirstCharecter()} = @ownerId";
         QueryDefinition query =
             new QueryDefinition(queryString)
-                .WithParameter("@partitionKey", PartitionKey)
+                .WithParameter("@partitionKey", ItemType)
                 .WithParameter("@id", id)
                 .WithParameter("@ownerId", ownerId);
         var queryResultSetIterator = container.GetItemQueryIterator<ShortLinkTableEntity>(query);
@@ -123,7 +122,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
         QueryDefinition query =
             new QueryDefinition(
                     $"SELECT * FROM c WHERE c.{nameof(ShortLinkTableEntity.ItemType)} = @partitionKey AND c.{nameof(ShortLinkTableEntity.Id)} = @id AND c.{nameof(ShortLinkTableEntity.OwnerId)} = @ownerId")
-                .WithParameter("@partitionKey", PartitionKey)
+                .WithParameter("@partitionKey", ItemType)
                 .WithParameter("@id", id)
                 .WithParameter("@ownerId", ownerId);
         var queryResultSetIterator = container.GetItemQueryIterator<ShortLinkTableEntity>(query);
@@ -153,7 +152,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
             var entity = new ShortLinkTableEntity
             {
                 Id = dm.Id,
-                ItemType = PartitionKey,
+                ItemType = ItemType,
                 OwnerId = ownerId,
                 EndpointUrl = domainModel.TargetUrl,
                 ShortCode = domainModel.ShortCode,
@@ -171,7 +170,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
 
         }
 
-        //var entity = await _tableClient.GetEntityAsync<ShortLinkTableEntity>(PartitionKey, id.ToString(), cancellationToken: cancellationToken);
+        //var entity = await _tableClient.GetEntityAsync<ShortLinkTableEntity>(ItemType, id.ToString(), cancellationToken: cancellationToken);
         //if (entity != null && entity.Value.OwnerId == ownerId)
         //{
         //    return new ShortLink(
@@ -194,7 +193,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
         var container = _cosmosClient.GetContainer(DatabaseName, ContainerName);
 
         var linkQueryDefinition = container.GetItemLinqQueryable<ShortLinkTableEntity>()
-            .Where(x => x.ItemType == PartitionKey && x.ShortCode == shortCode);
+            .Where(x => x.ItemType == ItemType && x.ShortCode == shortCode);
 
         var totalEntities = await linkQueryDefinition.CountAsync(cancellationToken: cancellationToken);
         return totalEntities.Resource > 0;
@@ -206,7 +205,7 @@ public class ShortLinksTableRepository : IShortLinksRepository
         var queryable = container.GetItemLinqQueryable<ShortLinkTableEntity>();
 
         var matches = queryable
-            .Where(ent => ent.ItemType == PartitionKey)
+            .Where(ent => ent.ItemType == ItemType)
             .Where(ent => ent.ShortCode == shortCode)
             .Where(ent => ent.ExpiresOn == null || ent.ExpiresOn > DateTime.UtcNow);
 
