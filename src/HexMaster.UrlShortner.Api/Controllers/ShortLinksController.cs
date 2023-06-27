@@ -31,6 +31,21 @@ public class ShortLinksController : AuthenticatedControllerBase
         return Ok(detailsModel);
     }
 
+    /// <summary>
+    /// Gets whether the short code is unique for the given short link
+    /// </summary>
+    /// <param name="id">ID of the ShortLink to exclude to prevent false positives on the current ShortLink</param>
+    /// <param name="shortCode">Code to check for uniqueness</param>
+    /// <param name="token">Continuqation token</param>
+    /// <returns></returns>
+    [HttpGet("{id:guid}/{shortCode}")]
+    [Authorize]
+    public async Task<IActionResult> GetIsUnique(Guid id, string shortCode, CancellationToken token)
+    {
+        var isUnique = await _shortLinksService.IsUniqueShortCodeAsync(id, shortCode, token);
+        return isUnique ? Ok() : BadRequest();
+    }
+
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> Post(ShortLinkCreateDto dto, CancellationToken token)

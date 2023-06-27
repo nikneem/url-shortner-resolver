@@ -57,7 +57,7 @@ public class ShortLinksService : IShortLinksService
         return DomainModelToDto(domainModel);
     }
 
-    private async Task<bool> IsUniqueShortCodeAsync( Guid id, string shortCode, CancellationToken cancellationToken = default)
+    public async Task<bool> IsUniqueShortCodeAsync( Guid id, string shortCode, CancellationToken cancellationToken = default)
     {
         return !await _repository.ExistsAsync(id, shortCode, cancellationToken);
     }

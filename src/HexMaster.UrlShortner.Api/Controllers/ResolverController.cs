@@ -13,8 +13,9 @@ namespace HexMaster.UrlShortner.Api.Controllers
         private const string DefaultRedirectUrl = "https://app.tinylnk.nl";
 
         [HttpGet]
+        [Route("")]
         [Route("{shortCode}")]
-        public async Task<IActionResult> ResolveAsync(string shortCode)
+        public async Task<IActionResult> ResolveAsync(string? shortCode)
         {
             var defaultRedirectUrl = _configuration.GetValue<string>("FrontEndEndpoint") ?? DefaultRedirectUrl;
             try
