@@ -119,9 +119,9 @@ public class ShortLinksTableRepository : IShortLinksRepository
     {
         var container = _cosmosClient.GetContainer(DatabaseName, ContainerName);
 
+        var queryString = $"SELECT * FROM c WHERE c.{nameof(ShortLinkTableEntity.ItemType).LowerCaseFirstCharecter()} = @partitionKey AND c.{nameof(ShortLinkTableEntity.Id).LowerCaseFirstCharecter()} = @id AND c.{nameof(ShortLinkTableEntity.OwnerId).LowerCaseFirstCharecter()} = @ownerId";
         QueryDefinition query =
-            new QueryDefinition(
-                    $"SELECT * FROM c WHERE c.{nameof(ShortLinkTableEntity.ItemType)} = @partitionKey AND c.{nameof(ShortLinkTableEntity.Id)} = @id AND c.{nameof(ShortLinkTableEntity.OwnerId)} = @ownerId")
+            new QueryDefinition(queryString)
                 .WithParameter("@partitionKey", ItemType)
                 .WithParameter("@id", id)
                 .WithParameter("@ownerId", ownerId);
@@ -166,6 +166,12 @@ public class ShortLinksTableRepository : IShortLinksRepository
             {
                 var response = await container.CreateItemAsync(entity, cancellationToken: cancellationToken);
                 return response.StatusCode == System.Net.HttpStatusCode.Created;
+            }
+
+            if (dm.TrackingState == TrackingState.Modified)
+            {
+                var response = await container.ReplaceItemAsync(entity, entity.Id.ToString(), cancellationToken: cancellationToken);
+                return response.StatusCode == System.Net.HttpStatusCode.OK;
             }
 
         }

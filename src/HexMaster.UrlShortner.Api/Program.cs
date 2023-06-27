@@ -13,13 +13,14 @@ builder.Services.AddScoped<IShortLinksService, ShortLinksService>();
 builder.Services.AddScoped<IShortLinksRepository, ShortLinksTableRepository>();
 builder.Services.Configure<AzureCloudConfiguration>(
     builder.Configuration.GetSection(AzureCloudConfiguration.SectionName));
+builder.Services.AddApplicationInsightsTelemetry();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicyName,
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200")
+            policy.WithOrigins("http://localhost:4200", "https://app.tinylnk.nl")
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials();

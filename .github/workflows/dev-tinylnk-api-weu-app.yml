@@ -11,6 +11,21 @@ env:
   DOTNET_CORE_VERSION: 7.0.x
   WORKING_DIRECTORY: src/HexMaster.UrlShortner.Api
 jobs:
+  publish-bicep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build & Push
+        working-directory: infrastructure
+        run: |
+          az bicep build --file main.bicep
+          az bicep build --file integration.bicep
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bicep-templates
+          path: infrastructure/*.json
+
   build:
     runs-on: ubuntu-latest
     steps:
