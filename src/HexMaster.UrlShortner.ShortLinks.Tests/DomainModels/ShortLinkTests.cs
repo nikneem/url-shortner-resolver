@@ -10,12 +10,12 @@ public class ShortLinkTests
     [Theory]
     [InlineData("")]
     [InlineData(null)]
-    public void WhenShortCodeIsNullOrEmpty_ItThrowsShortCodeNullOrEmptyException(string shortCode)
+    public  void WhenShortCodeIsNullOrEmpty_ItThrowsShortCodeNullOrEmptyException(string shortCode)
     {
         var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
 
-        var action = () => shortLink.SetShortCode(shortCode);
-        action.Should().Throw<ShortCodeNullOrEmptyException>()
+        var action =  async () => await shortLink.SetShortCode(shortCode, s => Task.FromResult(false));
+        action.Should().ThrowAsync<ShortCodeNullOrEmptyException>()
             .WithMessage(UrlShortnerShortLinksErrorCodes.ShortCodeNullOrEmpty.Code);
     }
 
@@ -28,8 +28,8 @@ public class ShortLinkTests
     {
         var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
 
-        var action = () => shortLink.SetShortCode(shortCode);
-        action.Should().Throw<ShortCodeInvalidException>()
+        var action = async () => await shortLink.SetShortCode(shortCode, s => Task.FromResult(false));
+        action.Should().ThrowAsync<ShortCodeInvalidException>()
             .WithMessage(UrlShortnerShortLinksErrorCodes.ShortLinkInvalid.Code);
     }
 
@@ -40,11 +40,11 @@ public class ShortLinkTests
     [InlineData("thisisthemax")]
     [InlineData("th1s1sth3max")]
     [InlineData("t1234567890x")]
-    public void WhenShortCodeIsValid_TheNewShortCodeIsAccepted(string shortCode)
+    public async Task WhenShortCodeIsValid_TheNewShortCodeIsAccepted(string shortCode)
     {
         var expected = shortCode.ToLowerInvariant();
         var shortLink = ShortLink.Create("https://link.to.endpoint", "abcd");
-        shortLink.SetShortCode(shortCode);
+        await shortLink.SetShortCode(shortCode, async (s) => await Task.FromResult(true));
         shortLink.ShortCode.Should().Be(expected);
     }
 

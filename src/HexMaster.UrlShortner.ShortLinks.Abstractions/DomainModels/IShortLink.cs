@@ -7,7 +7,7 @@ public interface IShortLink
     DateTimeOffset CreatedOn { get; }
     DateTimeOffset? ExpiresOn { get;  }
 
-    void SetShortCode(string value);
+    Task SetShortCode(string value, Func<string, Task<bool>> idUniqueFunction);
     void SetTargetUrl(string value);
     void SetExpiryDate(DateTimeOffset? value);
 }

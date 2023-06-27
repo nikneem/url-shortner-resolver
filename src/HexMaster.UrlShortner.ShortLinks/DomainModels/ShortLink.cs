@@ -15,7 +15,7 @@ public class ShortLink : DomainModel<Guid>, IShortLink
     public DateTimeOffset CreatedOn { get; }
     public DateTimeOffset? ExpiresOn { get; private set; }
 
-    public void SetShortCode(string value)
+    public async Task SetShortCode(string value, Func<string, Task<bool>> isUniqueFunction)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -29,8 +29,17 @@ public class ShortLink : DomainModel<Guid>, IShortLink
 
         if (!Equals(ShortCode, value))
         {
-            ShortCode = value.ToLowerInvariant();
-            SetState(TrackingState.Modified);
+            var lowerCasedValue = value.ToLowerInvariant();
+            var isUnique = await isUniqueFunction(lowerCasedValue);
+            if (isUnique)
+            {
+                ShortCode = lowerCasedValue;
+                SetState(TrackingState.Modified);
+            }
+            else
+            {
+                throw new ShortCodeNotUniqueException();
+            }
         }
     }
     public void SetTargetUrl(string value)

@@ -194,12 +194,12 @@ public class ShortLinksTableRepository : IShortLinksRepository
 
     }
 
-    public async Task<bool> ExistsAsync(string shortCode, CancellationToken cancellationToken)
+    public async Task<bool> ExistsAsync(Guid id, string shortCode, CancellationToken cancellationToken)
     {
         var container = _cosmosClient.GetContainer(DatabaseName, ContainerName);
 
         var linkQueryDefinition = container.GetItemLinqQueryable<ShortLinkTableEntity>()
-            .Where(x => x.ItemType == ItemType && x.ShortCode == shortCode);
+            .Where(x => x.ItemType == ItemType && x.ShortCode == shortCode && x.Id != id);
 
         var totalEntities = await linkQueryDefinition.CountAsync(cancellationToken: cancellationToken);
         return totalEntities.Resource > 0;
