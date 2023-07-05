@@ -23,7 +23,7 @@ namespace HexMaster.UrlShortner.Api.Controllers
                 if (!string.IsNullOrEmpty(shortCode))
                 {
                     var result = await _service.ResolveAsync(shortCode);
-                    defaultRedirectUrl = result.TargetUrl;
+                    defaultRedirectUrl = result.EndpointUrl;
                 }
             }
             catch (Exception ex)

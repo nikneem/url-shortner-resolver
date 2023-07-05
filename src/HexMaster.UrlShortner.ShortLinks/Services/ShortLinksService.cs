@@ -9,24 +9,28 @@ using HexMaster.UrlShortner.ShortLinks.Abstractions.DomainModels;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.ErrorCodes;
 using HexMaster.UrlShortner.ShortLinks.Abstractions.Exceptions;
 using HexMaster.DomainDrivenDesign;
+using HexMaster.UrlShortner.Core.Abstractions;
+using HexMaster.UrlShortner.Core.Commands;
+using HexMaster.UrlShortner.Core.Commands.CommandMessages;
 
 namespace HexMaster.UrlShortner.ShortLinks.Services;
 
 public class ShortLinksService : IShortLinksService
 {
     private readonly IShortLinksRepository _repository;
+    private readonly ICommandsHandler _commandsHandler;
 
-    public Task<ShortLinksListDto> ListAsync(string ownerId, string? query, int pageSize = Constants.DefaultPageSize, int page = 0, CancellationToken cancellationToken = default)
+    public Task<List<ShortLinksListItemDto>> ListAsync(string ownerId, string? query, CancellationToken cancellationToken = default)
     {
         // Sanitize pagination input and throw exceptions for invalid values
-        Sanitize.PaginationInput(page, pageSize);
+        //Sanitize.PaginationInput(page, pageSize);
 
         if (!string.IsNullOrWhiteSpace(query) && (!Regex.IsMatch(query, Constants.AlphanumericStringRegularExpression)))
         {
             throw new UrlShortnerShortLinkException(UrlShortnerShortLinksErrorCodes.QueryStringInvalid);
         }
 
-        return _repository.ListAsync(ownerId, query, pageSize, page, cancellationToken);
+        return _repository.ListAsync(ownerId, query, cancellationToken);
     }
     public Task<ShortLinkDetailsDto> GetAsync(string ownerId, Guid id, CancellationToken cancellationToken = default)
     {
@@ -46,7 +50,7 @@ public class ShortLinksService : IShortLinksService
     {
         var domainModel = await _repository.GetDomainModelAsync(ownerId, id, cancellationToken);
         await domainModel.SetShortCode(dto.ShortCode, shortCode => IsUniqueShortCodeAsync(id, shortCode, cancellationToken));
-        domainModel.SetTargetUrl(dto.TargetUrl);
+        domainModel.SetTargetUrl(dto.EndpointUrl);
         domainModel.SetExpiryDate(dto.ExpiresOn);
         return await _repository.UpdateAsync(ownerId, domainModel, cancellationToken);
     }
@@ -54,6 +58,7 @@ public class ShortLinksService : IShortLinksService
     public async Task<ShortLinkDetailsDto> ResolveAsync(string shortCode, CancellationToken cancellationToken = default)
     {
         var domainModel = await _repository.ResolveAsync(shortCode, cancellationToken);
+await             _commandsHandler.Send(new ProcessHitCommand(shortCode, DateTimeOffset.UtcNow), QueueName.HitsQueueName);
         return DomainModelToDto(domainModel);
     }
 
@@ -81,7 +86,7 @@ public class ShortLinksService : IShortLinksService
             {
                 Id = dm.Id,
                 ShortCode = domainModel.ShortCode,
-                TargetUrl = domainModel.TargetUrl,
+                EndpointUrl = domainModel.TargetUrl,
                 CreatedOn = domainModel.CreatedOn,
                 ExpiresOn = domainModel.ExpiresOn
             };
@@ -89,9 +94,10 @@ public class ShortLinksService : IShortLinksService
         return  null!;
     }
 
-    public ShortLinksService(IShortLinksRepository repository)
+    public ShortLinksService(IShortLinksRepository repository, ICommandsHandler commandsHandler)
     {
         _repository = repository;
+        _commandsHandler = commandsHandler;
     }
 
 }
